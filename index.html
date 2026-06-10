@@ -152,61 +152,54 @@
 
         <h1>Código Utilizado</h1>
 
-           <p>// --- Definição dos Pinos ---
-          const int TRIG = 12; // Pino de envio do ultrassom (Gatilho)
-          const int ECHO = 11; // Pino de retorno do eco
-          const int BUZZER = 10; // Pino do alarme sonoro
-          void setup() {
-          // Configuração inicial (roda uma vez ao ligar)
-         pinMode(TRIG, OUTPUT); // O pino TRIG envia sinal (saída)
-         pinMode(ECHO, INPUT); // O pino ECHO recebe sinal (entrada)
-         pinMode(BUZZER, OUTPUT);// O pino BUZZER emite som (saída)
-         // Inicia comunicação serial para testes (opcional)
-         Serial.begin(9600);
-         } 
-         void loop() {
-         // --- 1. Limpeza e Disparo do Pulso ---
-         digitalWrite(TRIG, LOW);
-         delayMicroseconds(2);
-         // Envia um pulso de 10 microsegundos
-         digitalWrite(TRIG, HIGH);
-         delayMicroseconds(10);
-         digitalWrite(TRIG, LOW);
-         // --- 2. Leitura do Eco ---
-         // A função pulseIn espera o pino ir para HIGH e conta o tempo
-         long duracao = pulseIn(ECHO, HIGH);
-         // --- 3. Cálculo da Distância ---
-         // Distância = (Tempo * Velocidade do Som) / 2
-         // Velocidade do som = 0.034 cm/us
-         int distancia = duracao * 0.034 / 2;
-         // --- 4. Lógica de Alerta ---
-         // Só atua se detectar algo entre 0 e 100cm (1 metro)
-         if (distancia > 0 && distancia <= 100) {
-         if (distancia < 20) {
-         // PERIGO IMINENTE (< 20cm): Som contínuo
+           <p>// --- Definição dos Pinos ---</p>
+           <p>const int TRIG = 12; // Pino de envio do ultrassom (Gatilho)</p>
+           <p>const int ECHO = 11; // Pino de retorno do eco</p>
+           <p>const int BUZZER = 10; // Pino do alarme sonoro</p>
+           <p>void setup() {</p>
+           <p>// Configuração inicial (roda uma vez ao ligar)</p>
+           <p>pinMode(TRIG, OUTPUT); // O pino TRIG envia sinal (saída)</p>
+           <p>pinMode(ECHO, INPUT); // O pino ECHO recebe sinal (entrada)</p>
+           <p>pinMode(BUZZER, OUTPUT);// O pino BUZZER emite som (saída)</p>
+           <p>// Inicia comunicação serial para testes (opcional)</p>
+           <p>Serial.begin(9600);</p>
+           <p>} </p>
+           <p>void loop() {</p>
+           <p>// --- 1. Limpeza e Disparo do Pulso ---</p>
+           <p>digitalWrite(TRIG, LOW);</p>
+           <p>delayMicroseconds(2);</p>
+           <p>// Envia um pulso de 10 microsegundos</p>
+           <p>digitalWrite(TRIG, HIGH);</p>
+           <p>delayMicroseconds(10);</p>
+           <p>digitalWrite(TRIG, LOW);</p>
+           <p>// --- 2. Leitura do Eco ---</p>
+           <p>// A função pulseIn espera o pino ir para HIGH e conta o tempo</p>
+           <p>long duracao = pulseIn(ECHO, HIGH);</p>
+           <p>// --- 3. Cálculo da Distância ---</p>
+           <p>// Distância = (Tempo * Velocidade do Som) / 2</p>
+           <p>// Velocidade do som = 0.034 cm/us</p>
+           <p>int distancia = duracao * 0.034 / 2;</p>
+           <p>// --- 4. Lógica de Alerta ---</p>
+           <p>// Só atua se detectar algo entre 0 e 100cm (1 metro)</p>
+           <p>if (distancia > 0 && distancia <= 100) {</p>
+           <p>if (distancia < 20) {</p>
+           <p>// PERIGO IMINENTE (< 20cm): Som contínuo</p>
 
-         digitalWrite(BUZZER, HIGH);
-         } else {
-         // ALERTA DE PROXIMIDADE: Bipes intermitentes
-         // Quanto menor a distância, mais rápido bipa
-         digitalWrite(BUZZER, HIGH);
-         delay(distancia * 5); // O tempo do bipe depende da distância
-         digitalWrite(BUZZER, LOW);
-         delay(distancia * 5); // O intervalo também
-         }
-         } else {
-         // Se estiver longe (> 100cm), silêncio total
-         digitalWrite(BUZZER, LOW);
-         }
-         // Pequena pausa para estabilidade
-         delay(50);
-         }
-         </p>
-
-
-
-
-
-
-
+           <p>digitalWrite(BUZZER, HIGH);</p>
+           <p>} else {</p>
+           <p>// ALERTA DE PROXIMIDADE: Bipes intermitentes</p>
+           <p>// Quanto menor a distância, mais rápido bipa</p>
+           <p>digitalWrite(BUZZER, HIGH);</p>
+           <p>delay(distancia * 5); // O tempo do bipe depende da distância</p>
+           <p>digitalWrite(BUZZER, LOW);</p>
+           <p>delay(distancia * 5); // O intervalo também</p>
+           <p>}</p>
+           <p>} else {</p>
+           <p>// Se estiver longe (> 100cm), silêncio total</p>
+           <p>digitalWrite(BUZZER, LOW);</p>
+           <p>}</p>
+           <p>// Pequena pausa para estabilidade</p>
+           <p>delay(50);</p>
+           <p>}</p>
+        
      </body>
