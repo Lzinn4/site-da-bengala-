@@ -1,1 +1,59 @@
+body{
+    background-color: lightgray;
+    font-family: Arial;
+}
+
+
+
+
+h1{
+    color: blue;
+    text-align: center;
+}
+
+
+
+
+h2{
+    color: darkblue;
+}
+
+
+
+
+p{
+    color: black;
+}
+
+
+
+
+ul{
+    color: black;
+}
+
+
+
+
+ol{
+    color: black;
+}
+
+
+
+
+pre{
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+
+
+
+img{
+    width: 300px;
+    border: 2px solid black;
+}
+
 
