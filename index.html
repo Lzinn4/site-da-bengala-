@@ -1,250 +1,419 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<html>
+
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Bengala com Sensor</title>
+<title>Bengala com Sensor de Obstáculos</title>
+
+
+<!-- CSS AQUI -->
+<link rel="stylesheet" href="style.css">
+
+
 </head>
 
-      <body style="font-size: 25px;">
 
-    <header>
-        <h1 style="text-align: center; color: rgb(0, 0, 0);">
-            Bengala com Sensor de Obstáculos
-        </h1>
+<body>
 
-        <p>
-            Este projeto consiste no desenvolvimento de uma bengala inteligente equipada com tecnologia assistiva para aumentar a autonomia de pessoas com deficiência visual. O objetivo principal é detectar obstáculos aéreos ou terrestres que a bengala convencional não alcança, prevenindo colisões e quedas.
 
-            Para isso, utilizamos a plataforma Arduino integrada a um sensor ultrassônico, que mede a distância de objetos em tempo real, e um sistema de alerta sonoro (buzzer) ou vibratório. O resultado esperado é um dispositivo de baixo custo e alta eficiência que proporcione mais segurança, confiança e mobilidade ao usuário em seus deslocamentos diários.
-        </p>
-    </header>
+<h1>Bengala com Sensor de Obstáculos</h1>
 
-    <section class="sectionFotos">
-        <h3>Foto do projeto </h3>
 
-        <div class="fotosAbertura">
-            <img src="<a href="https://ibb.co/zVzyySVx"><img src="https://i.ibb.co/WvLbbcv5/IMG-20260610-WA0004.jpg" alt="IMG 20260610 WA0004" border="0"></a>
-            
+<p>Projeto para ajudar pessoas com deficiência visual.</p>
 
-            <img src=""
-                alt=>
-        </div>
 
-        <div>
-            <ul>
-                <li>Imagem mostra o funcionamento da bengala com alunos e a direção do colegio acompanhando o progresso dos alunos.</li>
-    
-            </ul>
+<h2>Introdução</h2>
 
-             </ol>
-        </div>
-    </section>
 
-    <h1 style="color: rgb(0, 0, 0);">Explicação do Projeto</h1>
+<p>
+Este projeto consiste no desenvolvimento de uma bengala inteligente equipada com tecnologia assistiva para aumentar a autonomia de pessoas com deficiência visual.
+O objetivo principal é detectar obstáculos aéreos ou terrestres que a bengala convencional não alcança, prevenindo colisões e quedas.
+</p>
 
-    <h2> O Problema: Desafios da Mobilidade</h2>
 
-    <p>
-        Pessoas com deficiência visual enfrentam barreiras diárias que vão além da falta de sinalização adequada. A bengala guia tradicional, embora essencial, possui uma limitação física: ela só detecta obstáculos que estejam em contato direto com o solo.
+<p>
+Para isso utilizamos Arduino, sensor ultrassônico e um sistema de alerta sonoro ou vibratório.
+O resultado esperado é proporcionar mais segurança e mobilidade ao usuário.
+</p>
 
-        Isso deixa o usuário vulnerável a obstáculos aéreos, como galhos de árvores, placas e outros objetos suspensos, que podem causar acidentes na região do tronco e do rosto. Além disso, a incerteza sobre o ambiente gera insegurança emocional e limita a liberdade de locomoção.
-    </p>
 
-    <h3> A Importância da Tecnologia Assistiva</h3>
+<h2>1. O Problema: Desafios da Mobilidade</h2>
 
-    <p>
-        A tecnologia assistiva atua como uma ponte entre a limitação e a autonomia. No contexto da deficiência visual, ferramentas inteligentes não substituem os sentidos humanos, mas os ampliam.
 
-        Ao integrar sensores e sistemas eletrônicos em objetos comuns, transformamos um instrumento simples em um dispositivo interativo, capaz de interpretar o ambiente e fornecer informações em tempo real, aumentando o tempo de reação do usuário e sua percepção espacial.
-    </p>
+<p>
+Pessoas com deficiência visual enfrentam diversas dificuldades para se locomover.
+A bengala tradicional detecta apenas obstáculos que estão em contato com o solo.
+</p>
 
-    <h4> Justificativa</h4>
 
-    <p>
-        A justificativa deste projeto está na necessidade de promover inclusão social e acessibilidade de forma democrática.
+<p>
+Isso deixa o usuário vulnerável a galhos de árvores, placas e objetos suspensos.
+</p>
 
-        Desenvolver uma bengala inteligente utilizando componentes de baixo custo demonstra que é possível criar soluções eficientes sem depender de tecnologias inacessíveis.
-    </p>
 
-    <ul>
-        <li>Segurança: Reduzir o risco de colisões com obstáculos.</li>
-        <li>Autonomia: Permitir maior independência na locomoção.</li>
-        <li>Dignidade: Garantir o direito de ir e vir com mais confiança.</li>
-    </ul>
+<h2>2. A Importância da Tecnologia Assistiva</h2>
 
-    <footer>
-    </footer>
 
-      </body>
+<p>
+A tecnologia assistiva ajuda pessoas com deficiência a terem mais autonomia.
+</p>
+
+
+<p>
+Com sensores e componentes eletrônicos é possível melhorar a percepção do ambiente.
+</p>
+
+
+<h2>3. Justificativa</h2>
+
+
+<ul>
+<li>Mais segurança</li>
+<li>Mais autonomia</li>
+<li>Mais inclusão</li>
+<li>Mais confiança</li>
+</ul>
+
+
+<h2>4. Objetivos</h2>
+
+
+<p><b>Objetivo Geral:</b></p>
+
+
+<p>
+Desenvolver uma bengala inteligente capaz de detectar obstáculos.
+</p>
+
+
+<p><b>Objetivos Específicos:</b></p>
+
+
+<ul>
+<li>Utilizar Arduino</li>
+<li>Integrar sensor ultrassônico</li>
+<li>Emitir alertas</li>
+<li>Testar o funcionamento</li>
+</ul>
+
+
+<h2>5. Materiais Utilizados</h2>
+
+
+<ul>
+<li>Arduino Uno</li>
+<li>Sensor HC-SR04</li>
+<li>Buzzer</li>
+<li>LED RGB</li>
+<li>Módulo relé 5V</li>
+<li>Jumpers</li>
+<li>Protoboard</li>
+<li>Bateria</li>
+<li>Bengala</li>
+</ul>
+
+
+<h2>6. Etapas de Construção</h2>
+
+
+<ol>
+<li>Definir o funcionamento</li>
+<li>Escolher os componentes</li>
+<li>Conectar o sensor</li>
+<li>Ligar o buzzer</li>
+<li>Criar o código</li>
+<li>Montar tudo na bengala</li>
+<li>Fazer testes</li>
+<li>Ajustar a sensibilidade</li>
+</ol>
+
+
+<h2>7. Funcionamento do Sistema</h2>
+
+
+<p>
+O sensor ultrassônico envia ondas sonoras.
+</p>
+
+
+<p>
+Quando as ondas encontram um objeto elas retornam ao sensor.
+</p>
+
+
+<p>
+O Arduino calcula a distância e ativa o alerta quando necessário.
+</p>
+
+
+<h2>8. Código Utilizado</h2>
+
+
+<pre>
+// ===== HC-SR04 =====
+const int trigPin = 9;
+const int echoPin = 10;
+
+
+// ===== LED RGB (cátodo comum) =====
+const int ledR = 3;
+const int ledG = 5;
+const int ledB = 6;
+
+
+// ===== Motor =====
+const int motorPin = 11;
+
+
+// ===== Buzzer =====
+const int buzzerPin = 12;
+
+
+long duracao;
+float distancia;
+
+
+void setup() {
+  Serial.begin(9600);
+
+
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+
+  pinMode(ledR, OUTPUT);
+  pinMode(ledG, OUTPUT);
+  pinMode(ledB, OUTPUT);
+
+
+  pinMode(motorPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+}
+
+
+void loop() {
+
+
+  // Leitura do HC-SR04
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+
+
+  digitalWrite(trigPin, LOW);
+
+
+  duracao = pulseIn(echoPin, HIGH, 35000);
+
+
+  distancia = duracao * 0.0343 / 2.0;
+
+
+  Serial.print("Distancia: ");
+  Serial.print(distancia);
+  Serial.println(" cm");
+
+
+  // ===== LONGA DISTÂNCIA (250 a 400 cm) =====
+  if (distancia > 250 || distancia <= 0) {
+
+
+    // Verde
+    digitalWrite(ledR, LOW);
+    digitalWrite(ledG, HIGH);
+    digitalWrite(ledB, LOW);
+
+
+    digitalWrite(motorPin, LOW);
+    noTone(buzzerPin);
+
+
+    delay(100);
+  }
+
+
+  // ===== MÉDIA DISTÂNCIA (100 a 250 cm) =====
+  else if (distancia > 100) {
+
+
+    // Amarelo
+    digitalWrite(ledR, HIGH);
+    digitalWrite(ledG, HIGH);
+    digitalWrite(ledB, LOW);
+
+
+    // Vibração leve
+    digitalWrite(motorPin, HIGH);
+    tone(buzzerPin, 1000);
+    delay(120);
+
+
+    digitalWrite(motorPin, LOW);
+    noTone(buzzerPin);
+    delay(500);
+  }
+
+
+  // ===== CURTA DISTÂNCIA (30 a 100 cm) =====
+  else if (distancia > 30) {
+
+
+    // Vermelho
+    digitalWrite(ledR, HIGH);
+    digitalWrite(ledG, LOW);
+    digitalWrite(ledB, LOW);
+
+
+    // Vibração média
+    digitalWrite(motorPin, HIGH);
+    tone(buzzerPin, 2000);
+    delay(80);
+
+
+    digitalWrite(motorPin, LOW);
+    noTone(buzzerPin);
+    delay(150);
+  }
+
+
+  // ===== MUITO PERTO (< 30 cm) =====
+  else {
+
+
+    // Vermelho
+    digitalWrite(ledR, HIGH);
+    digitalWrite(ledG, LOW);
+    digitalWrite(ledB, LOW);
+
+
+    // Vibração forte
+    digitalWrite(motorPin, HIGH);
+    tone(buzzerPin, 3500);
+
+
+    delay(30);
+  }
+}
+
+
+
+
+long duration;
+int distance;
+
+
+void setup() {
+
+
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+
+
+  Serial.begin(9600);
+
+
+}
+
+
+void loop() {
+
+
+  // leitura da distancia
+
+
+}
+</pre>
+
+
+<h2>9. Resultados Obtidos</h2>
+
+
+<p>
+O dispositivo apresentou funcionamento satisfatório durante os testes.
+</p>
+
+
+<p>
+Foi possível detectar obstáculos entre 100 cm e 250 cm.
+</p>
+
+
+<p>
+O buzzer foi acionado corretamente quando um objeto se aproximava.
+</p>
+
+
+<h2>10. Análise e Discussão</h2>
+
+
+<p><b>Pontos positivos:</b></p>
+
+
+<ul>
+<li>Baixo custo</li>
+<li>Fácil montagem</li>
+<li>Resposta rápida</li>
+</ul>
+
+
+<p><b>Limitações:</b></p>
+
+
+<ul>
+<li>Pode falhar em chuva</li>
+<li>Dificuldade com objetos muito finos</li>
+<li>Dependência de bateria</li>
+</ul>
+
+
+<p><b>Possíveis melhorias:</b></p>
+
+
+<ul>
+<li>Mais sensores</li>
+<li>Alerta vibratório</li>
+<li>Bateria recarregável</li>
+<li>Ajuste automático</li>
+</ul>
+
+
+<h2>11. Conclusão</h2>
+
+
+<p>
+O objetivo do projeto foi alcançado com sucesso.
+</p>
+
+
+<p>
+A bengala inteligente conseguiu detectar obstáculos e alertar o usuário de forma eficiente.
+</p>
+
+
+<p>
+O projeto mostra a importância da tecnologia na inclusão social e na melhoria da qualidade de vida das pessoas.
+</p>
+
+
+<h2>12. Exemplos do Projeto (Fotos)</h2>
+
+
+<p>Foto 1</p>
+<img src="foto1.jpg">
+
+
+<p>Foto 2</p>
+<img src="foto2.jpg">
+
+
+</body>
+
 
 </html>
-
-
-
-    <body>
-     <h1 style="color: rgb(0, 0, 0);">Explicação Sobre Materiais e Funcionamento </h1>
-      <h2>Objetivo Geral:</h2>
-      <P>Desenvolver uma bengala inteligente com sensor capaz de detectar obstáculos.</P>
-      <h3>Objetivos Específicos:</h3>
-      <P>•Utilizar Arduino para programação;</P>
-      <P>•Integrar sensor ultrassônico;</P>
-      <p>•Emitir alerta (buzzer ou vibração); </p>
-      <p>•Testar o funcionamento do sistema;</p>
-        
-    </body>
-
-    <body>
-      <h1 style="color: rgb(0, 0, 0);">Materiais Utilizados;</h1>
-      <p>•Arduino Uno;</p>
-      <p>•Sensor ultrassônico HC-SR04;</p>
-      <p>•Buzzer (ou motor vibratório);</p>
-      <p>•Jumpers (fios);</p>
-      <p>•Jumpers (fios);</p>
-      <p>•Fonte de energia (bateria);</p>    
-      <p>•Bengala (estrutura física);</p>
-
-     </body>
-
-
-
-
-     <body>
-         <h1 style="color: rgb(0, 0, 0);"> Etapas de Construção</h1>
-         <h2>O desenvolvimento do projeto foi realizado nas seguintes etapas:</h2>
-         <p>Definir o funcionamento da bengala</p>
-         <p>Escolher os componentes</p>
-         <p>Conectar o sensor ao Arduino</p>
-         <p>Ligar o buzzer ou motor vibratório</p>
-         <p>Criar o código para medir distância</p>
-         <p>Definir o tipo de alerta</p>
-         <p>Prender o sensor na bengala</p>
-         <p>Organizar os fios</p>
-         <p>Testar a detecção de distância</p>
-         <p>Ajustar a sensibilidade do sistema</p>
-
-     </body>
-
-
-     <body>
-     
-         <h1 style="color: rgb(0, 0, 0);"> Funcionamento do Sistema</h1>
-         <h2 style="color: black;">O sistema funciona da seguinte forma:</h2>
-         <p>•O sensor ultrassônico emite ondas sonoras</p>
-         <p>•Essas ondas atingem um objeto e retornam</p>
-         <p>•O Arduino calcula a distância com base no tempo de retorno</p>
-         <p>•Se o objeto estiver próximo, o sistema ativa o alerta</p>
-         <p>•O alerta pode ser sonoro (buzzer) ou vibratório</p>
-
-
-     </body>
-
-
-
-  <body style="font-size: large 10px;">  
-        
-        <h1>Código Utilizado</h1>
-
-          <p style="font-size: 10px;"> <p>// --- Definição dos Pinos ---</p>
-           <p>const int TRIG = 12; // Pino de envio do ultrassom (Gatilho)</p>
-           <p>const int ECHO = 11; // Pino de retorno do eco</p>
-           <p>const int BUZZER = 10; // Pino do alarme sonoro</p>
-           <p>void setup() {</p>
-           <p>// Configuração inicial (roda uma vez ao ligar)</p>
-           <p>pinMode(TRIG, OUTPUT); // O pino TRIG envia sinal (saída)</p>
-           <p>pinMode(ECHO, INPUT); // O pino ECHO recebe sinal (entrada)</p>
-           <p>pinMode(BUZZER, OUTPUT);// O pino BUZZER emite som (saída)</p>
-           <p>// Inicia comunicação serial para testes (opcional)</p>
-           <p>Serial.begin(9600);</p>
-           <p>} </p>
-           <p>void loop() {</p>
-           <p>// --- 1. Limpeza e Disparo do Pulso ---</p>
-           <p>digitalWrite(TRIG, LOW);</p>
-           <p>delayMicroseconds(2);</p>
-           <p>// Envia um pulso de 10 microsegundos</p>
-           <p>digitalWrite(TRIG, HIGH);</p>
-           <p>delayMicroseconds(10);</p>
-           <p>digitalWrite(TRIG, LOW);</p>
-           <p>// --- 2. Leitura do Eco ---</p>
-           <p>// A função pulseIn espera o pino ir para HIGH e conta o tempo</p>
-           <p>long duracao = pulseIn(ECHO, HIGH);</p>
-           <p>// --- 3. Cálculo da Distância ---</p>
-           <p>// Distância = (Tempo * Velocidade do Som) / 2</p>
-           <p>// Velocidade do som = 0.034 cm/us</p>
-           <p>int distancia = duracao * 0.034 / 2;</p>
-           <p>// --- 4. Lógica de Alerta ---</p>
-           <p>// Só atua se detectar algo entre 0 e 100cm (1 metro)</p>
-           <p>if (distancia > 0 && distancia <= 100) {</p>
-           <p>if (distancia < 20) {</p>
-           <p>// PERIGO IMINENTE (< 20cm): Som contínuo</p>
-
-           <p>digitalWrite(BUZZER, HIGH);</p>
-           <p>} else {</p>
-           <p>// ALERTA DE PROXIMIDADE: Bipes intermitentes</p>
-           <p>// Quanto menor a distância, mais rápido bipa</p>
-           <p>digitalWrite(BUZZER, HIGH);</p>
-           <p>delay(distancia * 5); // O tempo do bipe depende da distância</p>
-           <p>digitalWrite(BUZZER, LOW);</p>
-           <p>delay(distancia * 5); // O intervalo também</p>
-           <p>}</p>
-           <p>} else {</p>
-           <p>// Se estiver longe (> 100cm), silêncio total</p>
-           <p>digitalWrite(BUZZER, LOW);</p>
-           <p>}</p>
-           <p>// Pequena pausa para estabilidade</p>
-           <p>delay(50);</p>
-           <p>}</p> </p>
-        
-
-<body>  
-
-     <h1>Resultados Obtidos </h1>
-
-     <p>O dispositivo apresentou funcionamento satisfatório durante os testes.
-        
-     Foi possível detectar obstáculos a uma distância média entre 50 cm e 100 cm. O buzzer foi acionado corretamente sempre que um objeto se aproximava da distância definida.
-     Foram observadas pequenas variações dependendo do tipo de superfície e do ambiente.</p>
-
-</body>
-
-<body>  
- <h1> Análise e Discussão </h1>
- <h2  style="color: rgb(0, 0, 0);"> Pontos positivos:</h2>
- <p>• Baixo custo</p>
- <p>• Fácil montagem</p>
- <p>• Resposta rápida</p>
-
- <h3>Limitações:</h3>
-
- <p>• Pode falhar em ambientes com chuva</p>
- <p>• Dificuldade com objetos muito finos</p>
- <p>• Pode falhar em ambientes com chuva</p>
-
- <h4>Possíveis melhorias:</h4>
-
- <p>• Uso de mais sensores</p>
- <p>• Bateria recarregável</p>
- <p>• Implementação de vibração ao invés de som</p>
- <p>• Uso de mais sensores</p>
-
-
-</body>
-
-
- <body>    
-
-
-
-    <h1>Conclusão</h1>
- 
-  <p>O objetivo do projeto foi alcançado com sucesso, pois foi possível desenvolver uma bengala inteligente capaz de detectar obstáculos e alertar o usuário de forma eficiente.
-   O projeto demonstra a importância da tecnologia na promoção da inclusão social, mostrando que soluções simples e acessíveis podem gerar grande impacto na vida das pessoas.
-   Dessa forma, a bengala inteligente contribui para uma sociedade mais inclusiva, proporcionando mais segurança, autonomia e qualidade de vida para pessoas com deficiência visual.
-</p>
- 
-
-
- </body>
+  
