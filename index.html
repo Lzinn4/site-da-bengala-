@@ -1,419 +1,863 @@
-<html>
-
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-<title>Bengala com Sensor de Obstáculos</title>
-
-
-<!-- CSS AQUI -->
-<link rel="stylesheet" href="style.css">
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Projetos IFA</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
 
 
-<h1>Bengala com Sensor de Obstáculos</h1>
+  <!-- Cabeçalho Principal -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="logo-container">
+        <img src="logo.png" alt="Logo do Projeto IFA" class="logo">
+      </div>
+      <div class="header-content">
+        <h1 class="main-title">Portal IFA</h1>
+        <p class="header-subtitle">Inovação & Tecnologia Assistiva</p>
+      </div>
+    </div>
 
 
-<p>Projeto para ajudar pessoas com deficiência visual.</p>
+    <!-- Controles de Acessibilidade e Ajuste de Luz -->
+    <div class="accessibility-controls">
+      <button id="btn-theme" class="control-btn" onclick="toggleTheme()" aria-label="Alternar modo de iluminação">
+        <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+          <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z"/>
+        </svg>
+        <span id="theme-text">Modo Escuro</span>
+      </button>
 
 
-<h2>Introdução</h2>
+      <button id="btn-read" class="control-btn" onclick="toggleReadPage()" aria-label="Ouvir conteúdo da página">
+        <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+          <path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <span id="read-btn-text">Ouvir Página</span>
+      </button>
 
 
-<p>
-Este projeto consiste no desenvolvimento de uma bengala inteligente equipada com tecnologia assistiva para aumentar a autonomia de pessoas com deficiência visual.
-O objetivo principal é detectar obstáculos aéreos ou terrestres que a bengala convencional não alcança, prevenindo colisões e quedas.
-</p>
+      <button id="btn-stop" class="control-btn stop-btn" onclick="stopReading()" aria-label="Parar leitura de voz" style="display: none;">
+        <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+          <path fill="currentColor" d="M6 6h12v12H6z"/>
+        </svg>
+        <span>Parar</span>
+      </button>
+    </div>
+  </header>
 
 
-<p>
-Para isso utilizamos Arduino, sensor ultrassônico e um sistema de alerta sonoro ou vibratório.
-O resultado esperado é proporcionar mais segurança e mobilidade ao usuário.
-</p>
+  <!-- Navegação de Abas -->
+  <nav class="nav-container" aria-label="Navegação principal">
+    <div class="tab-buttons" role="tablist">
+      <button role="tab" aria-selected="true" aria-controls="aba1" id="tab-1" class="tab-btn active" onclick="openTab(event, 'aba1')">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Início</span>
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="aba2" id="tab-2" class="tab-btn" onclick="openTab(event, 'aba2')">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        <span>Acessibilidade</span>
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="aba3" id="tab-3" class="tab-btn" onclick="openTab(event, 'aba3')">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <span>Óptica & Visão</span>
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="aba4" id="tab-4" class="tab-btn" onclick="openTab(event, 'aba4')">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7z"/></svg>
+        <span>Bengala Sensorial</span>
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="aba5" id="tab-5" class="tab-btn" onclick="openTab(event, 'aba5')">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
+        <span>Semáforo Arduino</span>
+      </button>
+    </div>
+  </nav>
 
 
-<h2>1. O Problema: Desafios da Mobilidade</h2>
+  <!-- Conteúdo Principal -->
+  <main class="content">
 
 
-<p>
-Pessoas com deficiência visual enfrentam diversas dificuldades para se locomover.
-A bengala tradicional detecta apenas obstáculos que estão em contato com o solo.
-</p>
+    <!-- ABA 1: PÁGINA INICIAL RENOVADA -->
+    <section id="aba1" role="tabpanel" aria-labelledby="tab-1" class="tab-content active">
+      <div class="hero-banner">
+        <span class="hero-badge">Tecnologia & Inclusão</span>
+        <h2>Meus projetos do IFA </h2>
+        <p>Um ecossistema dedicado ao estudo, desenvolvimento e disseminação de conhecimentos científicos para promover autonomia e acessibilidade plena.</p>
+        <div class="hero-actions">
+          <button class="action-btn primary" onclick="document.getElementById('tab-2').click()">Explorar Documentos</button>
+          <button class="action-btn secondary" onclick="toggleReadPage()">Ouvir Apresentação</button>
+        </div>
+      </div>
 
 
-<p>
-Isso deixa o usuário vulnerável a galhos de árvores, placas e objetos suspensos.
-</p>
+      <div class="section-header">
+        <h3 class="section-subtitle">Módulos de Estudo e Projetos</h3>
+        <p class="section-description">Selecione uma das áreas abaixo para abrir a documentação técnica completa.</p>
+      </div>
+     
+      <div class="grid-cards">
+        <div class="card" onclick="document.getElementById('tab-2').click()" tabindex="0" role="button" aria-label="Acessibilidade e Inclusão">
+          <div class="card-icon-wrapper">
+            <svg class="card-svg" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
+          </div>
+          <div class="card-body">
+            <h3>Acessibilidade e Inclusão</h3>
+            <p>Conceitos de acessibilidade, causas da deficiência visual, tipos de barreiras e estratégias para a inclusão escolar.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link">Acessar conteúdo</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+          </div>
+        </div>
 
 
-<h2>2. A Importância da Tecnologia Assistiva</h2>
+        <div class="card" onclick="document.getElementById('tab-3').click()" tabindex="0" role="button" aria-label="Óptica e Visão">
+          <div class="card-icon-wrapper">
+            <svg class="card-svg" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+          </div>
+          <div class="card-body">
+            <h3>Óptica e Visão</h3>
+            <p>Anatomia ocular, mecânica de refração, lentes convergentes/divergentes e o papel dos espelhos na tecnologia visual.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link">Acessar conteúdo</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+          </div>
+        </div>
 
 
-<p>
-A tecnologia assistiva ajuda pessoas com deficiência a terem mais autonomia.
-</p>
+        <div class="card" onclick="document.getElementById('tab-4').click()" tabindex="0" role="button" aria-label="Bengala Sensorial">
+          <div class="card-icon-wrapper">
+            <svg class="card-svg" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7z"/></svg>
+          </div>
+          <div class="card-body">
+            <h3>Bengala Sensorial</h3>
+            <p>Projeto físico e eletrônico com Arduino, sensor ultrassônico HC-SR04, alertas sonoros e retorno hálito-vibratório.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link">Acessar conteúdo</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+          </div>
+        </div>
 
 
-<p>
-Com sensores e componentes eletrônicos é possível melhorar a percepção do ambiente.
-</p>
+        <div class="card" onclick="document.getElementById('tab-5').click()" tabindex="0" role="button" aria-label="Semáforo Arduino">
+          <div class="card-icon-wrapper">
+            <svg class="card-svg" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
+          </div>
+          <div class="card-body">
+            <h3>Semáforo Arduino</h3>
+            <p>Estrutura de automação de tráfego, lógica de temporização de LEDs e fundamentos de circuitos para mobilidade urbana.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link">Acessar conteúdo</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+          </div>
+        </div>
+      </div>
 
 
-<h2>3. Justificativa</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <h4>Acessibilidade Nativa</h4>
+          <p>Desenvolvido sob o padrão WCAG com suporte completo para leitores de tela e comandos via teclado.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 21l3.53-1.04C9.33 20.6 10.63 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+          </div>
+          <h4>Síntese de Voz Integrada</h4>
+          <p>Mecanismo automático de áudio que lê todo o texto das abas ativas com controle manual de reprodução.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M20 15.31L23.31 12 20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69z"/></svg>
+          </div>
+          <h4>Ajuste de Luz Inteligente</h4>
+          <p>Controle dinâmico entre Modo Claro e Escuro, garantindo conforto visual e redução de fadiga ocular.</p>
+        </div>
+      </div>
+    </section>
 
 
-<ul>
-<li>Mais segurança</li>
-<li>Mais autonomia</li>
-<li>Mais inclusão</li>
-<li>Mais confiança</li>
-</ul>
+    <!-- ABA 2: DOCUMENTO 1 -->
+    <section id="aba2" role="tabpanel" aria-labelledby="tab-2" class="tab-content">
+      <article>
+        <h2>Acessibilidade e Deficiência Visual: Conceitos, Tipos e Inclusão Educacional</h2>
+        <p class="subtitle">Visão abrangente sobre conceitos fundamentais, causas, dimensões da acessibilidade e estratégias práticas para promover a inclusão.</p>
 
 
-<h2>4. Objetivos</h2>
+        <section class="topic">
+          <h3>1. O que é Acessibilidade?</h3>
+          <p>Acessibilidade é a condição de possibilidade para a adaptação, utilização e alcance com segurança e autonomia de espaços, edificações, transportes, informação, comunicação, mobiliários e equipamentos por pessoas com deficiência ou com mobilidade reduzida.</p>
+          <p>Mais do que um requisito técnico ou legal, a acessibilidade é um direito humano fundamental que possibilita o exercício pleno da cidadania, permitindo que todas as pessoas participem ativamente da sociedade em igualdade de condições.</p>
+        </section>
 
 
-<p><b>Objetivo Geral:</b></p>
+        <section class="topic">
+          <h3>2. O que é Deficiência Visual?</h3>
+          <p>A deficiência visual é caracterizada pela perda total ou parcial da capacidade de enxergar, que não pode ser totalmente corrigida com o uso de óculos convencionais, lentes de contato ou intervenções cirúrgicas/médicas. Ela é dividida principalmente em duas categorias:</p>
+          <ul>
+            <li><strong>Cegueira:</strong> Ausência total de visão ou percepção de luz muito reduzida, na qual a pessoa necessita do uso do sistema Braille e de recursos sonoros ou táteis para a leitura, escrita e locomoção.</li>
+            <li><strong>Baixa Visão (ou Visão Subnormal):</strong> Condição em que a pessoa possui uma perda significativa da função visual, mas ainda mantém resíduos visuais úteis que permitem a leitura de impressos ampliados ou o uso de auxílios ópticos específicos.</li>
+          </ul>
+        </section>
 
 
-<p>
-Desenvolver uma bengala inteligente capaz de detectar obstáculos.
-</p>
+        <section class="topic">
+          <h3>3. Principais Causas da Deficiência Visual</h3>
+          <h4>Causas Congênitas (presentes ao nascer)</h4>
+          <ul>
+            <li><strong>Catarata Congênita:</strong> Opacificação do cristalino presente ao nascimento.</li>
+            <li><strong>Glaucoma Congênito:</strong> Aumento da pressão intraocular desde o nascimento.</li>
+            <li><strong>Infecções Congênitas:</strong> Infecções maternas durante a gestação (como rubéola, toxoplasmose e citomegalovírus).</li>
+            <li><strong>Anomalias Genéticas ou Hereditárias:</strong> Malformações oculares ou síndromes genéticas.</li>
+          </ul>
 
 
-<p><b>Objetivos Específicos:</b></p>
+          <h4>Causas Adquiridas (desenvolvidas ao longo da vida)</h4>
+          <ul>
+            <li><strong>Erros de Refração Não Corrigidos:</strong> Causa comum de baixa visão prevenível.</li>
+            <li><strong>Catarata Senil:</strong> Opacificação do cristalino relacionada ao envelhecimento.</li>
+            <li><strong>Glaucoma:</strong> Dano progressivo ao nervo óptico, frequentemente associado à elevação da pressão ocular.</li>
+            <li><strong>Retinopatia Diabética:</strong> Complicação do diabetes mellitus que afeta os vasos sanguíneos da retina.</li>
+            <li><strong>Degeneração Macular Relacionada à Idade (DMRI):</strong> Deterioração da mácula, área central da retina.</li>
+            <li><strong>Traumas Oculares e Acidentes:</strong> Lesões decorrentes de acidentes de trabalho, trânsito ou domésticos.</li>
+          </ul>
+        </section>
 
 
-<ul>
-<li>Utilizar Arduino</li>
-<li>Integrar sensor ultrassônico</li>
-<li>Emitir alertas</li>
-<li>Testar o funcionamento</li>
-</ul>
+        <section class="topic">
+          <h3>4. Tipos de Acessibilidade e Suas Funções</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Tipo de Acessibilidade</th>
+                  <th scope="col">Funções e Descrição</th>
+                  <th scope="col">Exemplo Prático</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Acessibilidade Arquitetônica</strong></td>
+                  <td>Eliminar barreiras físicas em edifícios, vias públicas e transportes.</td>
+                  <td>Rampas, elevadores adaptados, pisos táteis e portas amplas.</td>
+                </tr>
+                <tr>
+                  <td><strong>Acessibilidade Atitudinal</strong></td>
+                  <td>Eliminar preconceitos, estigmas, estereótipos e discriminações.</td>
+                  <td>Sensibilização da comunidade e capacitação para atendimento inclusivo.</td>
+                </tr>
+                <tr>
+                  <td><strong>Acessibilidade Comunicacional</strong></td>
+                  <td>Garantir a transmissão de mensagens sem barreiras entre as pessoas.</td>
+                  <td>Libras, audiodescrição, textos em Braille e linguagem simples.</td>
+                </tr>
+                <tr>
+                  <td><strong>Acessibilidade Digital / Tecnológica</strong></td>
+                  <td>Permitir o uso autônomo de sites, softwares e dispositivos eletrônicos.</td>
+                  <td>Leitores de tela, síntese de voz nativa e contraste de tela.</td>
+                </tr>
+                <tr>
+                  <td><strong>Acessibilidade Instrumental</strong></td>
+                  <td>Superar barreiras em instrumentos, ferramentas e utensílios do cotidiano.</td>
+                  <td>Lupas eletrônicas, bengalas adaptadas e softwares assistivos.</td>
+                </tr>
+                <tr>
+                  <td><strong>Acessibilidade Programática</strong></td>
+                  <td>Eliminar barreiras invisíveis em leis, normas e políticas públicas ou privadas.</td>
+                  <td>Diretrizes de ensino inclusivo e editais de concursos acessíveis.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
 
-<h2>5. Materiais Utilizados</h2>
+        <section class="topic">
+          <h3>5. Possíveis Soluções para Acessibilidade nas Escolas</h3>
+          <ul>
+            <li><strong>Instalação de Sinalização Tátil e Sonora:</strong> Aplicação de piso tátil de alerta e direcionador nos corredores, além de identificação de salas de aula em Braille e alto-relevo.</li>
+            <li><strong>Adaptação do Material Didático:</strong> Disponibilização de livros em sistema Braille, impressos com caracteres ampliados para alunos com baixa visão e arquivos digitais acessíveis.</li>
+            <li><strong>Uso de Tecnologias Assistivas:</strong> Computadores equipados com leitores de tela, lupas eletrônicas e regletes/punções para escrita Braille.</li>
+            <li><strong>Organização Espacial Previsível:</strong> Manutenção da disposição dos móveis na sala de aula e orientação espacial prévia para o estudante reconhecer os ambientes.</li>
+            <li><strong>Adequação da Iluminação:</strong> Garantir iluminação adequada e antirreflexo nas salas para estudantes com visão subnormal.</li>
+          </ul>
+        </section>
 
 
-<ul>
-<li>Arduino Uno</li>
-<li>Sensor HC-SR04</li>
-<li>Buzzer</li>
-<li>LED RGB</li>
-<li>Módulo relé 5V</li>
-<li>Jumpers</li>
-<li>Protoboard</li>
-<li>Bateria</li>
-<li>Bengala</li>
-</ul>
+        <section class="topic">
+          <h3>6. Educação e Inclusão</h3>
+          <p>A educação inclusiva parte do princípio de que o sistema educacional deve se adaptar às necessidades de todos os alunos, e não o oposto. No contexto da deficiência visual, a inclusão efetiva requer:</p>
+          <ul>
+            <li><strong>Formação Continuada de Professores:</strong> Capacitação docente em metodologias ativas, audiodescrição e uso de recursos pedagógicos adaptados.</li>
+            <li><strong>Atendimento Educacional Especializado (AEE):</strong> Apoio complementar na Sala de Recursos Multifuncionais para ensino do sistema Braille, orientação e mobilidade, e uso do soroban.</li>
+            <li><strong>Cultura de Empatia e Pertencimento:</strong> Trabalho contínuo com os demais alunos para promover a convivência respeitosa e combater o capacitismo.</li>
+            <li><strong>Trabalho Colaborativo:</strong> Parceria entre professores da sala regular, professores de AEE, famílias e profissionais da saúde para acompanhar o desenvolvimento do estudante.</li>
+          </ul>
+        </section>
+      </article>
+    </section>
 
 
-<h2>6. Etapas de Construção</h2>
+    <!-- ABA 3: DOCUMENTO 2 -->
+    <section id="aba3" role="tabpanel" aria-labelledby="tab-3" class="tab-content">
+      <article>
+        <h2>Deficiência Visual, Olhos, Lentes e Espelhos</h2>
 
 
-<ol>
-<li>Definir o funcionamento</li>
-<li>Escolher os componentes</li>
-<li>Conectar o sensor</li>
-<li>Ligar o buzzer</li>
-<li>Criar o código</li>
-<li>Montar tudo na bengala</li>
-<li>Fazer testes</li>
-<li>Ajustar a sensibilidade</li>
-</ol>
+        <section class="topic">
+          <h3>1. Deficiência Visual</h3>
+          <p><strong>Definição:</strong> Perda parcial ou total da visão, irreversível mesmo com óculos, lentes ou cirurgia.</p>
+          <p><strong>Classificação (OMS):</strong></p>
+          <ul>
+            <li><strong>Baixa visão:</strong> acuidade menor que 6/18 no melhor olho.</li>
+            <li><strong>Cegueira:</strong> acuidade menor que 3/60 ou campo visual inferior a 10°.</li>
+          </ul>
+          <p><strong>Causas:</strong></p>
+          <ul>
+            <li><strong>Congênitas:</strong> glaucoma congênito, catarata congênita, retinopatia da prematuridade.</li>
+            <li><strong>Adquiridas:</strong> traumatismos, diabetes, degeneração macular, infecções oculares.</li>
+          </ul>
+          <p><strong>Impactos:</strong> Dificuldade em leitura, fotofobia, percepção limitada de cores e contrastes, necessidade de Braille ou tecnologias assistivas.</p>
+        </section>
 
 
-<h2>7. Funcionamento do Sistema</h2>
+        <section class="topic">
+          <h3>2. Anatomia do Olho</h3>
+          <p><strong>Estruturas principais:</strong></p>
+          <ul>
+            <li><strong>Córnea:</strong> primeira lente natural, responsável pela refração inicial.</li>
+            <li><strong>Cristalino:</strong> lente flexível que ajusta o foco.</li>
+            <li><strong>Retina:</strong> responsável pela formação da imagem.</li>
+            <li><strong>Nervo óptico:</strong> transmite sinais ao cérebro.</li>
+          </ul>
+          <p><strong>Erros refrativos (não são deficiência visual):</strong> Miopia, hipermetropia, astigmatismo e presbiopia — corrigíveis com lentes.</p>
+        </section>
 
 
-<p>
-O sensor ultrassônico envia ondas sonoras.
-</p>
+        <section class="topic">
+          <h3>3. Lentes</h3>
+          <p><strong>Tipos de lentes:</strong></p>
+          <ul>
+            <li><strong>Convergentes (convexas):</strong> focam a luz, usadas em hipermetropia.</li>
+            <li><strong>Divergentes (côncavas):</strong> espalham a luz, usadas em miopia.</li>
+          </ul>
+          <p><strong>Aplicações:</strong></p>
+          <ul>
+            <li>Óculos e lentes de contato para correção de erros refrativos.</li>
+            <li>Lentes de aumento para baixa visão.</li>
+            <li>Lentes intraoculares em cirurgias de catarata.</li>
+          </ul>
+        </section>
 
 
-<p>
-Quando as ondas encontram um objeto elas retornam ao sensor.
-</p>
+        <section class="topic">
+          <h3>4. Espelhos</h3>
+          <p><strong>Tipos de espelhos:</strong></p>
+          <ul>
+            <li><strong>Plano:</strong> forma imagens virtuais, do mesmo tamanho.</li>
+            <li><strong>Côncavo:</strong> pode formar imagens reais ou virtuais, dependendo da posição do objeto.</li>
+            <li><strong>Convexo:</strong> amplia o campo de visão, usado em retrovisores.</li>
+          </ul>
+          <p><strong>Aplicações médicas e tecnológicas:</strong></p>
+          <ul>
+            <li>Espelhos em instrumentos ópticos (microscópios, telescópios).</li>
+            <li>Auxílio em exames oftalmológicos.</li>
+          </ul>
+        </section>
 
 
-<p>
-O Arduino calcula a distância e ativa o alerta quando necessário.
-</p>
+        <section class="topic">
+          <h3>5. Relação entre Óptica e Deficiência Visual</h3>
+          <p><strong>Óptica aplicada:</strong></p>
+          <ul>
+            <li>Lentes corretivas ajudam em erros refrativos, mas não em deficiências irreversíveis.</li>
+            <li>Espelhos e sistemas ópticos ampliam imagens para pessoas com baixa visão.</li>
+          </ul>
+          <p><strong>Tecnologias assistivas:</strong></p>
+          <ul>
+            <li>Softwares de ampliação, leitores de tela, lupas eletrônicas.</li>
+            <li>Óculos inteligentes com reconhecimento de texto e objetos.</li>
+          </ul>
+        </section>
 
 
-<h2>8. Código Utilizado</h2>
+        <section class="topic">
+          <h3>6. Inclusão e Acessibilidade</h3>
+          <p><strong>Ferramentas de inclusão:</strong> Braille, bengala, cão-guia, materiais em alto contraste e audiodescrição.</p>
+          <p><strong>Educação:</strong> Estratégias pedagógicas adaptadas, uso de recursos táteis e digitais.</p>
+        </section>
 
 
-<pre>
-// ===== HC-SR04 =====
-const int trigPin = 9;
-const int echoPin = 10;
+        <div class="conclusion-box">
+          <strong>Conclusão:</strong> Este documento conecta deficiência visual com a anatomia do olho, o papel das lentes e dos espelhos na óptica, e mostra como esses elementos se relacionam com inclusão e acessibilidade.
+        </div>
+      </article>
+    </section>
 
 
-// ===== LED RGB (cátodo comum) =====
-const int ledR = 3;
-const int ledG = 5;
-const int ledB = 6;
+    <!-- ABA 4: DOCUMENTO 3 -->
+    <section id="aba4" role="tabpanel" aria-labelledby="tab-4" class="tab-content">
+      <article>
+        <h2>Bengala com Sensor de Obstáculos</h2>
 
 
-// ===== Motor =====
-const int motorPin = 11;
+        <section class="topic">
+          <h3>Introdução</h3>
+          <p>Este projeto consiste no desenvolvimento de uma bengala inteligente equipada com tecnologia assistiva para aumentar a autonomia de pessoas com deficiência visual. O objetivo principal é detectar obstáculos aéreos ou terrestres que a bengala convencional não alcança, prevenindo colisões e quedas.</p>
+          <p>Para isso, utilizamos a plataforma Arduino integrada a um sensor ultrassônico, que mede a distância de objetos em tempo real, e um sistema de alerta sonoro (buzzer) ou vibratório. O resultado esperado é um dispositivo de baixo custo e alta eficiência que proporcione mais segurança, confiança e mobilidade ao usuário em seus deslocamentos diários.</p>
+        </section>
 
 
-// ===== Buzzer =====
-const int buzzerPin = 12;
+        <section class="topic">
+          <h3>1. O Problema: Desafios da Mobilidade</h3>
+          <p>Pessoas com deficiência visual enfrentam barreiras diárias que vão além da falta de sinalização adequada. A bengala guia tradicional, embora essencial, possui uma limitação física: ela só detecta obstáculos que estejam em contato direto com o solo.</p>
+          <p>Isso deixa o usuário vulnerável a obstáculos aéreos, como galhos de árvores, placas e outros objetos suspensos, que podem causar acidentes na região do tronco e do rosto. Além disso, a incerteza sobre o ambiente gera insegurança emocional e limita a liberdade de locomoção.</p>
+        </section>
 
 
-long duracao;
-float distancia;
+        <section class="topic">
+          <h3>2. A Importância da Tecnologia Assistiva</h3>
+          <p>A tecnologia assistiva atua como uma ponte entre a limitação e a autonomia. No contexto da deficiência visual, ferramentas inteligentes não substituem os sentidos humanos, mas os ampliam.</p>
+          <p>Ao integrar sensores e sistemas eletrônicos em objetos comuns, transformamos um instrumento simples em um dispositivo interativo, capaz de “interpretar” o ambiente e fornecer informações em tempo real, aumentando o tempo de reação do usuário e sua percepção espacial.</p>
+        </section>
+
+
+        <section class="topic">
+          <h3>3. Justificativa</h3>
+          <p>A justificativa deste projeto está na necessidade de promover inclusão social e acessibilidade de forma democrática. Desenvolver uma bengala inteligente utilizando componentes de baixo custo demonstra que é possível criar soluções eficientes sem depender de tecnologias inacessíveis.</p>
+          <p>O projeto busca:</p>
+          <ul>
+            <li><strong>Segurança:</strong> Reduzir o risco de colisões com obstáculos.</li>
+            <li><strong>Autonomia:</strong> Permitir maior independência na locomoção.</li>
+            <li><strong>Dignidade:</strong> Garantir o direito de ir e vir com mais confiança.</li>
+          </ul>
+        </section>
+
+
+        <section class="topic">
+          <h3>4. Objetivos</h3>
+          <p><strong>Objetivo Geral:</strong> Desenvolver uma bengala inteligente com sensor capaz de detectar obstáculos.</p>
+          <p><strong>Objetivos Específicos:</strong></p>
+          <ul>
+            <li>Utilizar Arduino para programação</li>
+            <li>Integrar sensor ultrassônico</li>
+            <li>Emitir alerta (buzzer ou vibração)</li>
+            <li>Testar o funcionamento do sistema</li>
+          </ul>
+        </section>
+
+
+        <section class="topic">
+          <h3>5. Materiais Utilizados</h3>
+          <ul>
+            <li>Arduino Uno</li>
+            <li>Sensor ultrassônico HC-SR04</li>
+            <li>Buzzer (ou motor vibratório)</li>
+            <li>LED RGB</li>
+            <li>Transistor NPN</li>
+            <li>Jumpers (fios)</li>
+            <li>Protoboard</li>
+            <li>Fonte de energia (Power Bank / bateria)</li>
+            <li>Bengala (estrutura física)</li>
+          </ul>
+        </section>
+
+
+        <section class="topic">
+          <h3>6. Etapas de Construção</h3>
+          <ol>
+            <li>Definir o funcionamento da bengala</li>
+            <li>Escolher os componentes</li>
+            <li>Conectar o sensor ao Arduino</li>
+            <li>Ligar o buzzer ou motor vibratório</li>
+            <li>Criar o código para medir distância</li>
+            <li>Definir o tipo de alerta</li>
+            <li>Prender o sensor na bengala</li>
+            <li>Organizar os fios</li>
+            <li>Testar a detecção de distância</li>
+            <li>Ajustar a sensibilidade do sistema</li>
+          </ol>
+        </section>
+
+
+        <section class="topic">
+          <h3>7. Funcionamento do Sistema</h3>
+          <ul>
+            <li>O sensor ultrassônico emite ondas sonoras;</li>
+            <li>Essas ondas atingem um objeto e retornam;</li>
+            <li>O Arduino calcula a distância com base no tempo de retorno;</li>
+            <li>Se o objeto estiver próximo, o sistema ativa o alerta;</li>
+            <li>O alerta pode ser sonoro (buzzer) ou vibratório.</li>
+          </ul>
+        </section>
+
+
+        <section class="topic">
+          <h3>8. Circuito: Mapeamento dos Componentes e Conexões</h3>
+         
+          <h4>1. Sensor Ultrassônico (HC-SR04)</h4>
+          <ul>
+            <li>VCC ➔ 5V do Arduino</li>
+            <li>GND ➔ GND do Arduino</li>
+            <li>Trig ➔ Pino digital 2 do Arduino</li>
+            <li>Echo ➔ Pino digital 3 do Arduino</li>
+          </ul>
+
+
+          <h4>2. Ponte H L298N e Motor CC</h4>
+          <ul>
+            <li>OUT1 e OUT2 da Ponte H ➔ Fios do Motor CC</li>
+            <li>IN1 ➔ Pino digital 4 | IN2 ➔ Pino digital 5</li>
+            <li>IN3 ➔ Pino digital 7 | IN4 ➔ Pino digital 8</li>
+            <li>GND da Ponte H ➔ GND do Arduino</li>
+          </ul>
+
+
+          <h4>3. LED RGB (Cátodo Comum)</h4>
+          <ul>
+            <li>Pino GND ➔ GND do Arduino via resistor de 220Ω</li>
+            <li>Pino R (Vermelho) ➔ Pino digital 9</li>
+            <li>Pino G (Verde) ➔ Pino digital 10</li>
+            <li>Pino B (Azul) ➔ Pino digital 11</li>
+          </ul>
+
+
+          <h4>4. Buzzer Passivo/Ativo</h4>
+          <ul>
+            <li>Pino (+) ➔ Pino digital 6 do Arduino</li>
+            <li>Pino (-) ➔ GND do Arduino</li>
+          </ul>
+
+
+          <h4>5. Alimentação (Power Bank)</h4>
+          <p>Conecte o cabo USB do Power Bank na entrada USB do Arduino Uno para fornecer 5V estabilizados. Conecte a alimentação da Ponte H (12V/VCC) ao pino 5V do Arduino ou a uma saída USB dedicada, mantendo os GNDs interligados.</p>
+        </section>
+
+
+        <section class="topic">
+          <h3>9. Código Utilizado</h3>
+          <pre><code>// Pinos do Sensor Ultrassônico (HC-SR04)
+const int TRIG_PIN = 2;
+const int ECHO_PIN = 3;
+
+
+// Pinos da Ponte H L298N (Dois Motores)
+const int IN1_PIN = 4; // Motor A
+const int IN2_PIN = 5;
+const int IN3_PIN = 7; // Motor B
+const int IN4_PIN = 8;
+
+
+// Pino do Buzzer
+const int BUZZER_PIN = 6;
+
+
+// Pinos do LED RGB
+const int RED_PIN = 9;
+const int GREEN_PIN = 10;
+const int BLUE_PIN = 11;
 
 
 void setup() {
-  Serial.begin(9600);
-
-
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-
-
-  pinMode(ledR, OUTPUT);
-  pinMode(ledG, OUTPUT);
-  pinMode(ledB, OUTPUT);
-
-
-  pinMode(motorPin, OUTPUT);
-  pinMode(buzzerPin, OUTPUT);
-}
-
-
-void loop() {
-
-
-  // Leitura do HC-SR04
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-
-
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-
-
-  digitalWrite(trigPin, LOW);
-
-
-  duracao = pulseIn(echoPin, HIGH, 35000);
-
-
-  distancia = duracao * 0.0343 / 2.0;
-
-
-  Serial.print("Distancia: ");
-  Serial.print(distancia);
-  Serial.println(" cm");
-
-
-  // ===== LONGA DISTÂNCIA (250 a 400 cm) =====
-  if (distancia > 250 || distancia <= 0) {
-
-
-    // Verde
-    digitalWrite(ledR, LOW);
-    digitalWrite(ledG, HIGH);
-    digitalWrite(ledB, LOW);
-
-
-    digitalWrite(motorPin, LOW);
-    noTone(buzzerPin);
-
-
-    delay(100);
-  }
-
-
-  // ===== MÉDIA DISTÂNCIA (100 a 250 cm) =====
-  else if (distancia > 100) {
-
-
-    // Amarelo
-    digitalWrite(ledR, HIGH);
-    digitalWrite(ledG, HIGH);
-    digitalWrite(ledB, LOW);
-
-
-    // Vibração leve
-    digitalWrite(motorPin, HIGH);
-    tone(buzzerPin, 1000);
-    delay(120);
-
-
-    digitalWrite(motorPin, LOW);
-    noTone(buzzerPin);
-    delay(500);
-  }
-
-
-  // ===== CURTA DISTÂNCIA (30 a 100 cm) =====
-  else if (distancia > 30) {
-
-
-    // Vermelho
-    digitalWrite(ledR, HIGH);
-    digitalWrite(ledG, LOW);
-    digitalWrite(ledB, LOW);
-
-
-    // Vibração média
-    digitalWrite(motorPin, HIGH);
-    tone(buzzerPin, 2000);
-    delay(80);
-
-
-    digitalWrite(motorPin, LOW);
-    noTone(buzzerPin);
-    delay(150);
-  }
-
-
-  // ===== MUITO PERTO (< 30 cm) =====
-  else {
-
-
-    // Vermelho
-    digitalWrite(ledR, HIGH);
-    digitalWrite(ledG, LOW);
-    digitalWrite(ledB, LOW);
-
-
-    // Vibração forte
-    digitalWrite(motorPin, HIGH);
-    tone(buzzerPin, 3500);
-
-
-    delay(30);
-  }
-}
-
-
-
-
-long duration;
-int distance;
-
-
-void setup() {
-
-
   pinMode(TRIG_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
-
-
+ 
+  pinMode(IN1_PIN, OUTPUT);
+  pinMode(IN2_PIN, OUTPUT);
+  pinMode(IN3_PIN, OUTPUT);
+  pinMode(IN4_PIN, OUTPUT);
+ 
   pinMode(BUZZER_PIN, OUTPUT);
-  pinMode(RELAY_PIN, OUTPUT);
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+  pinMode(BLUE_PIN, OUTPUT);
 
 
-  Serial.begin(9600);
+  pararMotores();
+}
 
 
+void setRGBColor(int red, int green, int blue) {
+  analogWrite(RED_PIN, red);
+  analogWrite(GREEN_PIN, green);
+  analogWrite(BLUE_PIN, blue);
+}
+
+
+long medirDistancia() {
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+ 
+  long duration = pulseIn(ECHO_PIN, HIGH, 30000);
+ 
+  if (duration == 0) {
+    return 400;
+  }
+ 
+  long distance = duration * 0.034 / 2;
+  return distance;
+}
+
+
+void ligarMotores() {
+  digitalWrite(IN1_PIN, HIGH);
+  digitalWrite(IN2_PIN, LOW);
+  digitalWrite(IN3_PIN, HIGH);
+  digitalWrite(IN4_PIN, LOW);
+}
+
+
+void pararMotores() {
+  digitalWrite(IN1_PIN, LOW);
+  digitalWrite(IN2_PIN, LOW);
+  digitalWrite(IN3_PIN, LOW);
+  digitalWrite(IN4_PIN, LOW);
 }
 
 
 void loop() {
+  long distance = medirDistancia();
 
 
-  // leitura da distancia
+  // ESTÁGIO 1: MUITO PERTO (≤ 30 cm)
+  if (distance > 0 && distance <= 30) {
+    setRGBColor(255, 0, 0);       // Vermelho
+    tone(BUZZER_PIN, 1000);        
+    ligarMotores();              
+  }
+  // ESTÁGIO 2: MAIS PERTO (31 cm a 100 cm)
+  else if (distance > 30 && distance <= 100) {
+    setRGBColor(255, 255, 0);     // Amarelo
+    tone(BUZZER_PIN, 10000);        
+    pararMotores();              
+  }
+  // ESTÁGIO 3: LONGE (> 100 cm)
+  else {
+    setRGBColor(0, 255, 0);       // Verde
+    noTone(BUZZER_PIN);          
+    pararMotores();              
+  }
 
 
+  delay(60);
+}</code></pre>
+        </section>
+
+
+        <section class="topic">
+          <h3>10. Resultados Obtidos</h3>
+          <p>O dispositivo apresentou funcionamento satisfatório durante os testes. Foi possível detectar obstáculos a uma distância média entre 100 cm e 250 cm. O buzzer foi acionado corretamente sempre que um objeto se aproximava da distância definida. Foram observadas pequenas variações dependendo do tipo de superfície e do ambiente.</p>
+        </section>
+
+
+        <section class="topic">
+          <h3>11. Análise e Discussão</h3>
+          <p><strong>Pontos positivos:</strong> Baixo custo, fácil montagem e resposta rápida.</p>
+          <p><strong>Limitações:</strong> Pode falhar em ambientes com chuva, dificuldade com objetos muito finos e dependência de bateria.</p>
+          <p><strong>Possíveis melhorias:</strong> Uso de mais sensores, implementação de vibração ao invés de som, bateria recarregável e ajuste automático de sensibilidade.</p>
+        </section>
+
+
+        <section class="topic">
+          <h3>12. Conclusão</h3>
+          <p>O objetivo do projeto foi alcançado com sucesso. A bengala inteligente demonstrou que soluções tecnológicas acessíveis podem gerar grande impacto na qualidade de vida, segurança e autonomia de pessoas com deficiência visual.</p>
+        </section>
+
+
+        <section class="topic">
+          <h3>13. Galeria de Fotos do Projeto</h3>
+          <div class="image-gallery">
+            <div class="img-placeholder">Insira a Foto 1 da Bengala Aqui</div>
+            <div class="img-placeholder">Insira a Foto 2 dos Circuitos Aqui</div>
+          </div>
+        </section>
+      </article>
+    </section>
+
+
+    <!-- ABA 5: DOCUMENTO 4 -->
+    <section id="aba5" role="tabpanel" aria-labelledby="tab-5" class="tab-content">
+      <article>
+        <h2>PROJETO DE ROBÓTICA: CIRCUITO DE SEMÁFORO COM ARDUINO</h2>
+
+
+        <section class="topic">
+          <h3>1. Introdução</h3>
+          <p>O presente projeto consiste na montagem de um circuito de semáforo utilizando uma placa Arduino Uno e um módulo de LEDs nas cores vermelho, amarelo e verde. O objetivo é representar, em pequena escala, o funcionamento de um semáforo real, fazendo com que as luzes sejam acionadas automaticamente em uma sequência programada.</p>
+          <p>A atividade permite compreender de forma prática conceitos de eletrônica, programação e automação. Por meio do Arduino, é possível controlar os LEDs de acordo com comandos escritos em código, definindo qual luz deve permanecer acesa e por quanto tempo.</p>
+        </section>
+
+
+        <section class="topic">
+          <h3>2. Matéria e Conhecimentos Envolvidos</h3>
+          <p>Este projeto relaciona-se às áreas de Robótica, Programação, Eletrônica e Tecnologia. Durante a montagem, são trabalhados:</p>
+          <ul>
+            <li>Lógica de programação e sequência de comandos;</li>
+            <li>Entradas e saídas digitais do Arduino;</li>
+            <li>Controle de LEDs por sinais eléris;</li>
+            <li>Uso de temporização com a função <code>delay()</code>;</li>
+            <li>Noções de tensão, corrente e polaridade;</li>
+            <li>Automação de processos por meio de microcontroladores.</li>
+          </ul>
+        </section>
+
+
+        <section class="topic">
+          <h3>3. Objetivos</h3>
+          <p><strong>3.1 Objetivo geral:</strong> Construir e programar um circuito eletrônico capaz de simular o funcionamento de um semáforo, utilizando um Arduino Uno para controlar automaticamente as luzes.</p>
+          <p><strong>3.2 Objetivos específicos:</strong></p>
+          <ul>
+            <li>Conhecer o funcionamento básico de uma placa Arduino;</li>
+            <li>Aprender a controlar LEDs por meio de programação;</li>
+            <li>Desenvolver raciocínio lógico e organização de sequências;</li>
+            <li>Compreender a relação entre software e componentes eletrônicos;</li>
+            <li>Aplicar conceitos de automação em um projeto prático.</li>
+          </ul>
+        </section>
+
+
+        <section class="topic">
+          <h3>4. Materiais Utilizados</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Material</th>
+                  <th scope="col">Função</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Arduino Uno</strong></td>
+                  <td>Responsável por executar o programa e controlar o circuito.</td>
+                </tr>
+                <tr>
+                  <td><strong>Módulo de semáforo / LEDs</strong></td>
+                  <td>Possui LEDs vermelho, amarelo e verde para representar o semáforo.</td>
+                </tr>
+                <tr>
+                  <td><strong>Cabo USB</strong></td>
+                  <td>Comunicação com o computador e alimentação da placa.</td>
+                </tr>
+                <tr>
+                  <td><strong>Jumpers</strong></td>
+                  <td>Conexões elétricas entre os componentes.</td>
+                </tr>
+                <tr>
+                  <td><strong>Protoboard</strong></td>
+                  <td>Permite montar o circuito sem soldagem.</td>
+                </tr>
+                <tr>
+                  <td><strong>Resistores</strong></td>
+                  <td>Limitam a corrente elétrica para proteção dos LEDs.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+
+        <section class="topic">
+          <h3>5. Funcionamento do Circuito</h3>
+          <p>O Arduino atua como controlador. A sequência lógica programada é:</p>
+          <ol>
+            <li>Luz verde acesa por um determinado período;</li>
+            <li>Luz verde desliga e a luz amarela é acionada;</li>
+            <li>Luz amarela desliga e a luz vermelha é acionada;</li>
+            <li>Após o tempo da luz vermelha, o ciclo reinicia automaticamente.</li>
+          </ol>
+        </section>
+
+
+        <section class="topic">
+          <h3>6. Montagem e Ligações</h3>
+          <p>A montagem deve ser realizada com o Arduino desligado. Conecte os LEDs aos pinos digitais definidos na programação, respeitando o GND. Recomendamos o uso de resistores em série para LEDs individuais.</p>
+        </section>
+
+
+        <section class="topic">
+          <h3>7. Exemplo de Código</h3>
+          <pre><code>#define pinLEDVerde 11
+#define pinLEDAmarelo 12
+#define pinLEDVermelho 13
+
+
+void setup() {
+  pinMode(pinLEDVerde, OUTPUT);
+  pinMode(pinLEDAmarelo, OUTPUT);
+  pinMode(pinLEDVermelho, OUTPUT);
 }
-</pre>
 
 
-<h2>9. Resultados Obtidos</h2>
+void loop() {
+  digitalWrite(pinLEDVerde, HIGH);
+  digitalWrite(pinLEDAmarelo, LOW);
+  digitalWrite(pinLEDVermelho, LOW);
+  delay(2000);
+ 
+  digitalWrite(pinLEDVerde, LOW);
+  digitalWrite(pinLEDAmarelo, HIGH);
+  delay(500);
+ 
+  digitalWrite(pinLEDAmarelo, LOW);
+  digitalWrite(pinLEDVermelho, HIGH);
+  delay(2000);
+}</code></pre>
+        </section>
 
 
-<p>
-O dispositivo apresentou funcionamento satisfatório durante os testes.
-</p>
+        <section class="topic">
+          <h3>8. Resultado Esperado</h3>
+          <p>Ao executar o programa, o circuito exibirá a transição automática entre verde, amarelo e vermelho de forma cíclica contínua.</p>
+        </section>
 
 
-<p>
-Foi possível detectar obstáculos entre 100 cm e 250 cm.
-</p>
+        <section class="topic">
+          <h3>9. Importância do Projeto</h3>
+          <p>Conecta o aprendizado teórico à prática visual. Serve como base fundamental para automações avançadas em engenharia de tráfego, robótica urbana e sistemas de segurança.</p>
+        </section>
 
 
-<p>
-O buzzer foi acionado corretamente quando um objeto se aproximava.
-</p>
+        <section class="topic">
+          <h3>10. Conclusão</h3>
+          <p>O projeto atingiu com êxito os objetivos de introduzir a programação microcontrolada e a eletrônica básica. Com modificações simples, possibilita a expansão para cruzamentos inteligentes e inclusão de sensores ou sonorizadores acessíveis.</p>
+        </section>
 
 
-<h2>10. Análise e Discussão</h2>
+        <section class="topic">
+          <h3>11. Referência de Estudo</h3>
+          <p>Arduino – conceitos básicos de programação e controle de saídas digitais. Material de apoio para robótica educacional.</p>
+        </section>
 
 
-<p><b>Pontos positivos:</b></p>
+        <section class="topic">
+          <h3>12. Fotos do Circuito</h3>
+          <div class="image-gallery">
+            <img src="https://i.ibb.co/x8g9TzxC/IMG-20260825-113748.jpg" width="400" height="250" px="10">
+            <div class="img-placeholder">Insira a Foto 2 da Protoboard Aqui</div>
+          </div>
+        </section>
+      </article>
+    </section>
 
 
-<ul>
-<li>Baixo custo</li>
-<li>Fácil montagem</li>
-<li>Resposta rápida</li>
-</ul>
+  </main>
 
 
-<p><b>Limitações:</b></p>
-
-
-<ul>
-<li>Pode falhar em chuva</li>
-<li>Dificuldade com objetos muito finos</li>
-<li>Dependência de bateria</li>
-</ul>
-
-
-<p><b>Possíveis melhorias:</b></p>
-
-
-<ul>
-<li>Mais sensores</li>
-<li>Alerta vibratório</li>
-<li>Bateria recarregável</li>
-<li>Ajuste automático</li>
-</ul>
-
-
-<h2>11. Conclusão</h2>
-
-
-<p>
-O objetivo do projeto foi alcançado com sucesso.
-</p>
-
-
-<p>
-A bengala inteligente conseguiu detectar obstáculos e alertar o usuário de forma eficiente.
-</p>
-
-
-<p>
-O projeto mostra a importância da tecnologia na inclusão social e na melhoria da qualidade de vida das pessoas.
-</p>
-
-
-<h2>12. Exemplos do Projeto (Fotos)</h2>
-
-
-<p>Foto 1</p>
-<img src="foto1.jpg">
-
-
-<p>Foto 2</p>
-<img src="foto2.jpg">
-
-
+  <script src="script.js"></script>
 </body>
-
-
 </html>
-  
+
